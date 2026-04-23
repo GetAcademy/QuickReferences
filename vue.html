@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue Quick Reference</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+
+    :root {
+      --page-bg: #f3f3f3;
+      --box-bg: #ffffff;
+      --box-border: #dddddd;
+      --text: #222;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      width: 297mm;
+      min-height: 210mm;
+      padding: 10mm;
+      background: var(--page-bg);
+    }
+
+    .flow-columns {
+      column-count: 2;
+      column-gap: 8mm;
+    }
+
+    .code-box {
+      break-inside: avoid;
+      background: var(--box-bg);
+      border: 1px solid var(--box-border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin: 0 0 8mm 0;
+      overflow: hidden;
+    }
+
+    pre[class*="language-"] {
+      margin: 0;
+      padding: 0;
+      background: transparent !important;
+      font-size: 10.2px;
+      line-height: 1.22;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      tab-size: 2;
+    }
+
+    code[class*="language-"] {
+      font-family: Consolas, "JetBrains Mono", "Fira Code", monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    /* Hide Prism's language label if a plugin/theme adds one */
+    .toolbar, div.code-toolbar > .toolbar { display: none !important; }
+
+    @media print {
+      body { background: white; }
+      .page {
+        width: auto;
+        min-height: auto;
+        padding: 0;
+        background: white;
+      }
+      .code-box {
+        border-color: #d9d9d9;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="flow-columns">
+      <div class="code-box">
+<pre><code class="language-typescript">// props (readonly)
+type Props = { value: number; label?: string }
+const props = defineProps&lt;Props&gt;()
+
+// emits
+const emit = defineEmits&lt;{
+  (e: 'increment'): void
+  (e: 'update:value', value: number): void
+}&gt;()
+
+// reactivity + computed
+const count = ref&lt;number&gt;(0)
+const state = reactive({ count: 0, name: '' })
+const double = computed(() =&gt; count.value * 2)
+
+// v-model
+const text = ref('')
+type ModelProps = { value: number }
+const modelProps = defineProps&lt;ModelProps&gt;()
+const modelEmit = defineEmits&lt;{
+  (e: 'update:value', value: number): void
+}&gt;()</code></pre>
+      </div>
+
+      <div class="code-box">
+<pre><code class="language-html">&lt;!-- script setup --&gt;
+&lt;script setup lang="ts"&gt;&lt;/script&gt;
+
+&lt;!-- expressions --&gt;
+{{ count }} {{ count + 1 }} {{ isActive ? 'Yes' : 'No' }}
+
+&lt;!-- binding --&gt;
+&lt;div :id="id" :class="{ active: isActive }" :style="{ color: 'red' }"&gt;&lt;/div&gt;
+&lt;div :class="['btn', isActive &amp;&amp; 'active']"&gt;&lt;/div&gt;
+
+&lt;!-- events --&gt;
+&lt;button @click="increment"&gt;&lt;/button&gt;
+&lt;button @click="emit('increment')"&gt;&lt;/button&gt;
+&lt;button @click="count++"&gt;&lt;/button&gt;
+&lt;button @click="doSomething(id)"&gt;&lt;/button&gt;
+&lt;form @submit.prevent="submit"&gt;&lt;/form&gt;
+&lt;button @click.stop="click"&gt;&lt;/button&gt;
+&lt;input @keyup.enter="save" /&gt;
+
+&lt;!-- v-model --&gt;
+&lt;input v-model="text" /&gt;
+&lt;input
+  :value="modelProps.value"
+  @input="e =&gt; modelEmit('update:value', (e.target as HTMLInputElement).valueAsNumber)"
+/&gt;
+
+&lt;!-- conditionals --&gt;
+&lt;div v-if="isVisible"&gt;&lt;/div&gt;
+&lt;div v-else-if="other"&gt;&lt;/div&gt;
+&lt;div v-else&gt;&lt;/div&gt;
+&lt;div v-show="isVisible"&gt;&lt;/div&gt;
+
+&lt;!-- loops --&gt;
+&lt;div v-for="item in items" :key="item.id"&gt;{{ item }}&lt;/div&gt;
+&lt;div v-for="(item, i) in items" :key="i"&gt;&lt;/div&gt;
+&lt;div v-for="(v, k) in obj" :key="k"&gt;&lt;/div&gt;
+&lt;div v-for="n in 6" :key="n"&gt;{{ n }}&lt;/div&gt;
+
+&lt;!-- slots --&gt;
+&lt;slot /&gt;
+&lt;slot name="header" /&gt;
+&lt;MyComp&gt;
+  &lt;template #default&gt;Default&lt;/template&gt;
+  &lt;template #header&gt;Header&lt;/template&gt;
+&lt;/MyComp&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>
