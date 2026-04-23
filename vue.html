@@ -104,13 +104,49 @@
     }
 
     @media print {
-      :root {
-        --font-size: 10.5px;
-        --line-height: 1.2;
-        --gap: 16px;
-        --pad: 10px;
-        --radius: 8px;
-      }
+  :root {
+    --font-size: 10.5px;
+    --line-height: 1.2;
+    --gap: 16px;
+    --pad: 10px;
+    --radius: 8px;
+  }
+
+  html, body {
+    width: 297mm;
+    height: 210mm;
+  }
+
+  body {
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sheet {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+    border-color: #d9d9d9;
+    break-inside: avoid;
+    width: calc(297mm - 20mm);
+  }
+
+  .col {
+    display: block;
+  }
+
+  .section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
 
       body {
         background: white;
