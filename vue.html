@@ -237,8 +237,8 @@ const double = computed(() =&gt; count.value * 2)</code></pre>
         <section class="section">
 <pre><code class="language-html">&lt;!-- loops --&gt;
 &lt;div v-for="item in items" :key="item.id"&gt;{{ item }}&lt;/div&gt;
-&lt;div v-for="(item, i) in items" :key="i"&gt;&lt;/div&gt;
-&lt;div v-for="(v, k) in obj" :key="k"&gt;&lt;/div&gt;
+&lt;div v-for="(item, index) in items" :key="item.id"&gt;&lt;/div&gt;
+&lt;div v-for="(value, keyName) in obj" :key="keyName"&gt;&lt;/div&gt;
 &lt;div v-for="n in 6" :key="n"&gt;{{ n }}&lt;/div&gt;</code></pre>        
         </section>
       </div>
