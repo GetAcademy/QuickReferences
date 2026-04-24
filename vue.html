@@ -170,6 +170,18 @@
     <div class="sheet">
       <div class="col">
         <section class="section">
+<pre><code class="language-typescript">// reactivity + computed
+const count = ref&lt;number&gt;(0)
+const state = reactive({ count: 0, name: '' })
+const double = computed(() =&gt; count.value * 2)</code></pre>
+        </section>
+        <section class="section">
+<pre><code class="language-typescript">// oppdatere state
+const increment = () => {
+  count.value++      // ref → .value
+  state.count++      // reactive → direkte
+}</code></pre></section>
+        <section class="section">
 <pre><code class="language-typescript">// props (readonly) = data inn i komponenten
 type Props = { value: number; label?: string }
 const props = defineProps&lt;Props&gt;()</code></pre>
@@ -183,18 +195,6 @@ const emit = defineEmits&lt;{
 }&gt;()</code></pre>
         </section>
 
-        <section class="section">
-<pre><code class="language-typescript">// reactivity + computed
-const count = ref&lt;number&gt;(0)
-const state = reactive({ count: 0, name: '' })
-const double = computed(() =&gt; count.value * 2)</code></pre>
-        </section>
-        <section class="section">
-<pre><code class="language-typescript">// oppdatere state
-const increment = () => {
-  count.value++      // ref → .value
-  state.count++      // reactive → direkte
-}</code></pre></section>
         <section class="section">
 <pre><code class="language-html">&lt;!-- single file component --&gt;
 &lt;script setup lang="ts"&gt;&lt;/script&gt;
