@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JavaScript – Verktøykassa (Emne 1–2)</title>
+
+  <!-- Highlight.js Github-theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>window.addEventListener('DOMContentLoaded',()=>hljs.highlightAll());</script>
+
+  <style>
+    body{margin:0;font:16px/1.45 system-ui,sans-serif;background:#fbfbfd;color:#111}
+    header{text-align:center;padding:20px}
+    header h1{margin:0 0 6px;font-size:26px}
+    header p{margin:0;color:#555}
+    .sheet{width:min(1120px,95vw);margin:8px auto 32px}
+    .cols{column-count:3;column-gap:18px}
+    @media(max-width:1100px){.cols{column-count:2}}
+    @media(max-width:720px){.cols{column-count:1}}
+    .card{break-inside:avoid;background:#fff;border:1px solid #e6e8ee;
+          border-radius:14px;padding:12px;margin:0 0 12px}
+    .card h2{margin:.1rem 0 .35rem;font-size:16px;display:flex;gap:.5rem}
+    .card h2 .tag{margin-left:auto;padding:.05rem .5rem;border-radius:999px;
+                 background:#2563eb;color:#fff;font-size:11px}
+    pre{margin:.4rem 0;border-radius:8px}
+    footer{text-align:center;color:#555;font-size:12px;padding:12px}
+    @page{ size:A4; margin:12mm; }
+    @media print{
+      body{background:#fff}
+      .sheet{width:auto;margin:0}
+      .cols{column-count:3;column-gap:12px}
+      footer{display:none}
+      *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>JAVASCRIPT – VERKTØYKASSA (Emne 1–2)</h1>
+    <p>Tre-kolonne oppsett • Emojis for rask skanning • Lenker til W3Schools</p>
+  </header>
+
+  <main class="sheet">
+    <div class="cols">
+
+      <!-- Grunnferdigheter -->
+      <section class="card">
+        <h2>🚀 Grunnferdigheter <span class="tag"><a href="https://www.w3schools.com/js/js_htmldom.asp">DOM</a></span></h2>
+        <pre><code class="language-js">document.getElementById('id').innerHTML = 'tekst'</code></pre>
+        <pre><code class="language-html">&lt;button onclick="vis()"&gt;Klikk&lt;/button&gt;</code></pre>
+      </section>
+
+      <!-- Funksjoner -->
+      <section class="card">
+        <h2>🧩 Funksjoner <span class="tag"><a href="https://www.w3schools.com/js/js_functions.asp">Functions</a></span></h2>
+        <pre><code class="language-js">function vis(){ document.getElementById('id').innerHTML='Hei' }</code></pre>
+        <pre><code class="language-js">function hils(navn){ return 'Hei ' + navn }</code></pre>
+        <pre><code class="language-js">function dobbel(x){ return x*2 }</code></pre>
+        <div>➡️ Lambda: <a href="https://www.w3schools.com/js/js_arrow_function.asp">Arrow Functions</a></div>
+        <pre><code class="language-js">const f = (x) => x*2</code></pre>
+      </section>
+
+      <!-- Variabler -->
+      <section class="card">
+        <h2>📦 Variabler <span class="tag"><a href="https://www.w3schools.com/js/js_let.asp">let/const</a></span></h2>
+        <pre><code class="language-js">let x; // Deklarasjon</code></pre>
+        <pre><code class="language-js">x = 3; // Tilordning</code></pre>
+        <pre><code class="language-js">let y = 5; // Deklarasjon + tilordning</code></pre>
+        <pre><code class="language-js">const navn='Ada' // const: må tilordnes med en gang</code></pre>
+      </section>
+
+      <!-- Operatorer -->
+      <section class="card">
+        <h2>➕ Operatorer <span class="tag"><a href="https://www.w3schools.com/js/js_operators.asp">Ops</a></span></h2>
+        <pre><code class="language-js">+ - * / % **    // Aritmetiske</code></pre>
+        <pre><code class="language-js">= += -= *= /= %= // Tilordning</code></pre>
+        <pre><code class="language-js">=== !== == !=   // Sammenligning</code></pre>
+        <pre><code class="language-js">&gt; &gt;= &lt; &lt;=       // Større/mindre enn</code></pre>
+        <pre><code class="language-js">&amp;&amp; || !         // Logiske</code></pre>
+        <pre><code class="language-js">x&gt;5 ? 'stor':'liten' // Ternary</code></pre>
+      </section>
+
+      <!-- If -->
+      <section class="card">
+        <h2>🔀 If-setninger <span class="tag"><a href="https://www.w3schools.com/js/js_if_else.asp">If</a></span></h2>
+        <pre><code class="language-js">if(x&gt;0){ ... } // Kun if</code></pre>
+        <pre><code class="language-js">if(x&gt;0){...} else if(x&lt;0){...} // If + else if</code></pre>
+        <pre><code class="language-js">if(x&gt;0){...} else if(x&lt;0){...} else {...}</code></pre>
+      </section>
+
+      <!-- Null -->
+      <section class="card">
+        <h2>🕳️ Null &amp; Undefined <span class="tag"><a href="https://www.w3schools.com/js/js_undefined.asp">Ref</a></span></h2>
+        <pre><code class="language-js">let x=null; // Null = tom verdi</code></pre>
+        <pre><code class="language-js">let y; // Undefined = ikke satt</code></pre>
+      </section>
+
+      <!-- Løkker -->
+      <section class="card">
+        <h2>🔁 Løkker <span class="tag"><a href="https://www.w3schools.com/js/js_loop_for.asp">Loops</a></span></h2>
+        <pre><code class="language-js">for(let i=0;i&lt;5;i++){ sum+=i }</code></pre>
+        <pre><code class="language-js">for(const v of xs){ console.log(v) }</code></pre>
+        <pre><code class="language-js">while(confirm('Fortsette?')){ tall++ }</code></pre>
+      </section>
+
+      <!-- MVC -->
+      <section class="card">
+        <h2>🧭 MVC</h2>
+        <pre><code class="language-js">const model={navn:'Ada',lys:'rødt'}</code></pre>
+        <pre><code class="language-js">document.getElementById('id').innerHTML=model.lys</code></pre>
+        <pre><code class="language-js">function sett(v){ model.lys=v; view() }</code></pre>
+        <pre><code class="language-html">&lt;input value="${model.navn}" oninput="model.navn=this.value"&gt;</code></pre>
+      </section>
+
+      <!-- Tall -->
+      <section class="card">
+        <h2>🔢 Tall &amp; Math <span class="tag"><a href="https://www.w3schools.com/js/js_math.asp">Math</a></span></h2>
+        <pre><code class="language-js">parseInt('42'); parseFloat('3.14'); x.toFixed(2)</code></pre>
+        <pre><code class="language-js">Math.round(x); Math.floor(x); Math.ceil(x)</code></pre>
+        <pre><code class="language-js">Math.max(a,b); Math.min(a,b)</code></pre>
+        <pre><code class="language-js">Math.random()</code></pre>
+        <pre><code class="language-js">Math.floor(Math.random()*(max-min+1))+min</code></pre>
+      </section>
+
+      <!-- String -->
+      <section class="card">
+        <h2>📝 String <span class="tag"><a href="https://www.w3schools.com/js/js_string_methods.asp">Methods</a></span></h2>
+        <pre><code class="language-js">'abc'.length; 'abc'.slice(1,3); 'abc'.includes('a')</code></pre>
+        <pre><code class="language-js">'a'.toUpperCase(); '  a  '.trim()</code></pre>
+        <pre><code class="language-js">'a;b'.split(';'); ['a','b'].join(',')</code></pre>
+        <pre><code class="language-js">'7'.padStart(2,'0')</code></pre>
+        <pre><code class="language-js">`Hei ${navn}\nVelkommen`</code></pre>
+      </section>
+
+      <!-- Dato -->
+      <section class="card">
+        <h2>📅 Date <span class="tag"><a href="https://www.w3schools.com/js/js_dates.asp">Dates</a></span></h2>
+        <pre><code class="language-js">const d=new Date(); d.getFullYear(); d.getMonth()</code></pre>
+        <pre><code class="language-js">d.toLocaleDateString('no-NO'); d.toISOString()</code></pre>
+        <pre><code class="language-js">new Date(d.getTime()+24*60*60*1000)</code></pre>
+      </section>
+
+      <!-- Objekter -->
+      <section class="card">
+        <h2>🧱 Objekter <span class="tag"><a href="https://www.w3schools.com/js/js_objects.asp">Objects</a></span></h2>
+        <pre><code class="language-js">const p={navn:'Ada',alder:20}; const q={}; q.navn='Ada'</code></pre>
+        <pre><code class="language-js">const store={}; store['nøkkel']='verdi'</code></pre>
+        <pre><code class="language-js">for(const k in p){ console.log(k,p[k]) }</code></pre>
+      </section>
+
+      <!-- Arrays -->
+      <section class="card">
+        <h2>📜 Arrays <span class="tag"><a href="https://www.w3schools.com/js/js_arrays.asp">Arrays</a></span></h2>
+        <pre><code class="language-js">const xs=[1,2,3]; xs.push(4); xs.pop(); xs[0]</code></pre>
+        <pre><code class="language-js">for(let i=0;i&lt;xs.length;i++){ ... }</code></pre>
+        <pre><code class="language-js">for(const v of xs){ ... }</code></pre>
+        <pre><code class="language-js">xs.find(fn); xs.filter(fn); xs.map(fn)</code></pre>
+      </section>
+
+      <!-- DOM hendelser -->
+      <section class="card">
+        <h2>🖱️ DOM-hendelser <span class="tag"><a href="https://www.w3schools.com/js/js_htmldom_events.asp">Events</a></span></h2>
+        <pre><code class="language-html">&lt;button onclick="funksjon()"&gt;</code></pre>
+        <pre><code class="language-html">&lt;input oninput="oppdater()"&gt;</code></pre>
+        <pre><code class="language-html">&lt;select onchange="endre()"&gt;</code></pre>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>Skriv ut til PDF via nettleserens «Skriv ut» → A4 → Skala 95–100% → Smale marger.</footer>
+</body>
+</html>

@@ -170,13 +170,13 @@
     <div class="sheet">
       <div class="col">
         <section class="section">
-<pre><code class="language-typescript">// props (readonly)
+<pre><code class="language-typescript">// props (readonly) = data inn i komponenten
 type Props = { value: number; label?: string }
 const props = defineProps&lt;Props&gt;()</code></pre>
         </section>
 
         <section class="section">
-<pre><code class="language-typescript">// emits
+<pre><code class="language-typescript">// emits = data ut av komponenten
 const emit = defineEmits&lt;{
   (e: 'increment'): void
   (e: 'update:value', value: number): void
@@ -189,17 +189,6 @@ const count = ref&lt;number&gt;(0)
 const state = reactive({ count: 0, name: '' })
 const double = computed(() =&gt; count.value * 2)</code></pre>
         </section>
-
-        <section class="section">
-<pre><code class="language-typescript">// v-model
-const text = ref('')
-type ModelProps = { value: number }
-const modelProps = defineProps&lt;ModelProps&gt;()
-const modelEmit = defineEmits&lt;{
-  (e: 'update:value', value: number): void
-}&gt;()</code></pre>
-        </section>
-
         <section class="section">
 <pre><code class="language-html">&lt;!-- script setup --&gt;
 &lt;script setup lang="ts"&gt;&lt;/script&gt;</code></pre>
@@ -219,23 +208,19 @@ const modelEmit = defineEmits&lt;{
 
       <div class="col">
         <section class="section">
-<pre><code class="language-html">&lt;!-- events --&gt;
-&lt;button @click="increment"&gt;&lt;/button&gt;
-&lt;button @click="emit('increment')"&gt;&lt;/button&gt;
-&lt;button @click="count++"&gt;&lt;/button&gt;
-&lt;button @click="doSomething(id)"&gt;&lt;/button&gt;
-&lt;form @submit.prevent="submit"&gt;&lt;/form&gt;
-&lt;button @click.stop="click"&gt;&lt;/button&gt;
+<pre><code class="language-html">&lt;!-- events --&gt; &lt;!-- kall en funksjon --&gt;
+&lt;button @click="increment"&gt;&lt;/button&gt; &lt;!-- send event opp til parent --&gt;
+&lt;button @click="emit('increment')"&gt;&lt;/button&gt; &lt;!-- enkel inline endring --&gt;
+&lt;button @click="count++"&gt;&lt;/button&gt; &lt;!-- kall funksjon med argument --&gt;
+&lt;button @click="doSomething(id)"&gt;&lt;/button&gt; &lt;!-- stopp vanlig form-submit --&gt;
+&lt;form @submit.prevent="submit"&gt;&lt;/form&gt; &lt;!-- stopp bubbling --&gt;
+&lt;button @click.stop="click"&gt;&lt;/button&gt; &lt;!-- reager på Enter-tast --&gt;
 &lt;input @keyup.enter="save" /&gt;</code></pre>
         </section>
 
         <section class="section">
 <pre><code class="language-html">&lt;!-- v-model --&gt;
-&lt;input v-model="text" /&gt;
-&lt;input
-  :value="modelProps.value"
-  @input="e =&gt; modelEmit('update:value', (e.target as HTMLInputElement).valueAsNumber)"
-/&gt;</code></pre>
+&lt;input v-model="count" /&gt;
         </section>
 
         <section class="section">
@@ -251,17 +236,7 @@ const modelEmit = defineEmits&lt;{
 &lt;div v-for="item in items" :key="item.id"&gt;{{ item }}&lt;/div&gt;
 &lt;div v-for="(item, i) in items" :key="i"&gt;&lt;/div&gt;
 &lt;div v-for="(v, k) in obj" :key="k"&gt;&lt;/div&gt;
-&lt;div v-for="n in 6" :key="n"&gt;{{ n }}&lt;/div&gt;</code></pre>
-        </section>
-
-        <section class="section">
-<pre><code class="language-html">&lt;!-- slots --&gt;
-&lt;slot /&gt;
-&lt;slot name="header" /&gt;
-&lt;MyComp&gt;
-  &lt;template #default&gt;Default&lt;/template&gt;
-  &lt;template #header&gt;Header&lt;/template&gt;
-&lt;/MyComp&gt;</code></pre>
+&lt;div v-for="n in 6" :key="n"&gt;{{ n }}&lt;/div&gt;</code></pre>        
         </section>
       </div>
     </div>
