@@ -208,19 +208,19 @@ const double = computed(() =&gt; count.value * 2)</code></pre>
 
       <div class="col">
         <section class="section">
-<pre><code class="language-html">&lt;!-- events --&gt; &lt;!-- kall en funksjon --&gt;
-&lt;button @click="increment"&gt;&lt;/button&gt; &lt;!-- send event opp til parent --&gt;
-&lt;button @click="emit('increment')"&gt;&lt;/button&gt; &lt;!-- enkel inline endring --&gt;
-&lt;button @click="count++"&gt;&lt;/button&gt; &lt;!-- kall funksjon med argument --&gt;
-&lt;button @click="doSomething(id)"&gt;&lt;/button&gt; &lt;!-- stopp vanlig form-submit --&gt;
-&lt;form @submit.prevent="submit"&gt;&lt;/form&gt; &lt;!-- stopp bubbling --&gt;
-&lt;button @click.stop="click"&gt;&lt;/button&gt; &lt;!-- reager på Enter-tast --&gt;
-&lt;input @keyup.enter="save" /&gt;</code></pre>
+<pre><code class="language-html">&lt;!-- events --&gt; 
+&lt;button @click="increment"&gt;&lt;/button&gt; &lt;!-- kall en funksjon --&gt;
+&lt;button @click="emit('increment')"&gt;&lt;/button&gt; &lt;!-- send event opp til parent --&gt;
+&lt;button @click="count++"&gt;&lt;/button&gt; &lt;!-- enkel inline endring --&gt;
+&lt;button @click="doSomething(id)"&gt;&lt;/button&gt; &lt;!-- kall funksjon med argument --&gt;
+&lt;form @submit.prevent="submit"&gt;&lt;/form&gt; &lt;!-- stopp vanlig form-submit --&gt;
+&lt;button @click.stop="click"&gt;&lt;/button&gt; &lt;!-- stopp bubbling --&gt;
+&lt;input @keyup.enter="save" /&gt;  &lt;!-- reager på Enter-tast --&gt;</code></pre>
         </section>
 
         <section class="section">
 <pre><code class="language-html">&lt;!-- v-model --&gt;
-&lt;input v-model="count" /&gt;
+&lt;input v-model="count" /&gt;</code></pre>
         </section>
 
         <section class="section">
