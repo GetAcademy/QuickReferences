@@ -1,175 +1,288 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JavaScript – Verktøykassa (Emne 1–2)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript – Verktøykasse Emne 1–2</title>
 
-  <!-- Highlight.js Github-theme -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script>window.addEventListener('DOMContentLoaded',()=>hljs.highlightAll());</script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
 
   <style>
-    body{margin:0;font:16px/1.45 system-ui,sans-serif;background:#fbfbfd;color:#111}
-    header{text-align:center;padding:20px}
-    header h1{margin:0 0 6px;font-size:26px}
-    header p{margin:0;color:#555}
-    .sheet{width:min(1120px,95vw);margin:8px auto 32px}
-    .cols{column-count:3;column-gap:18px}
-    @media(max-width:1100px){.cols{column-count:2}}
-    @media(max-width:720px){.cols{column-count:1}}
-    .card{break-inside:avoid;background:#fff;border:1px solid #e6e8ee;
-          border-radius:14px;padding:12px;margin:0 0 12px}
-    .card h2{margin:.1rem 0 .35rem;font-size:16px;display:flex;gap:.5rem}
-    .card h2 .tag{margin-left:auto;padding:.05rem .5rem;border-radius:999px;
-                 background:#2563eb;color:#fff;font-size:11px}
-    pre{margin:.4rem 0;border-radius:8px}
-    footer{text-align:center;color:#555;font-size:12px;padding:12px}
-    @page{ size:A4; margin:12mm; }
-    @media print{
-      body{background:#fff}
-      .sheet{width:auto;margin:0}
-      .cols{column-count:3;column-gap:12px}
-      footer{display:none}
-      *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    @page {
+      size: A4 landscape;
+      margin: 10mm;
+    }
+
+    :root {
+      --page-bg: #f3f3f3;
+      --card-bg: #ffffff;
+      --border: #dddddd;
+      --text: #222;
+      --gap: 20px;
+      --pad: 16px;
+      --radius: 12px;
+      --font-size: clamp(11.5px, 0.72vw, 14px);
+      --line-height: 1.23;
+      --max-width: 1600px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .sheet {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--pad);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--gap);
+      align-items: start;
+    }
+
+    .side {
+      display: grid;
+      gap: var(--gap);
+      align-items: start;
+    }
+
+    .section {
+      min-width: 0;
+    }
+
+    pre[class*="language-"] {
+      margin: 0;
+      padding: 0;
+      background: transparent !important;
+      font-size: var(--font-size);
+      line-height: var(--line-height);
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      tab-size: 2;
+    }
+
+    code[class*="language-"] {
+      font-family: Consolas, "JetBrains Mono", "Fira Code", monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .toolbar, div.code-toolbar > .toolbar {
+      display: none !important;
+    }
+
+    @media (max-width: 1100px) {
+      :root {
+        --font-size: 13px;
+        --gap: 16px;
+      }
+
+      .sheet {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 12px;
+      }
+
+      .side {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      :root {
+        --font-size: 8.8px;
+        --line-height: 1.12;
+        --gap: 12px;
+        --pad: 10px;
+        --radius: 8px;
+      }
+
+      html, body {
+        width: 297mm;
+        height: 210mm;
+      }
+
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .sheet {
+        display: grid !important;
+        grid-template-columns: 2fr 1fr !important;
+        gap: var(--gap) !important;
+        width: calc(297mm - 20mm);
+        border-color: #d9d9d9;
+        break-inside: avoid;
+      }
+
+      .side {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: var(--gap) !important;
+      }
+
+      .section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>JAVASCRIPT – VERKTØYKASSA (Emne 1–2)</h1>
-    <p>Tre-kolonne oppsett • Emojis for rask skanning • Lenker til W3Schools</p>
-  </header>
+  <main class="page">
+    <div class="sheet">
+      <section class="section">
+<pre><code class="language-javascript">// DOM
+document.getElementById(&#x27;id&#x27;).innerHTML = &#x27;tekst&#x27;
 
-  <main class="sheet">
-    <div class="cols">
+// funksjoner
+function vis(){ document.getElementById(&#x27;id&#x27;).innerHTML = &#x27;Hei&#x27; }
+function hils(navn){ return &#x27;Hei &#x27; + navn }
+function dobbel(x){ return x * 2 }
+const f = (x) =&gt; x * 2
 
-      <!-- Grunnferdigheter -->
-      <section class="card">
-        <h2>🚀 Grunnferdigheter <span class="tag"><a href="https://www.w3schools.com/js/js_htmldom.asp">DOM</a></span></h2>
-        <pre><code class="language-js">document.getElementById('id').innerHTML = 'tekst'</code></pre>
-        <pre><code class="language-html">&lt;button onclick="vis()"&gt;Klikk&lt;/button&gt;</code></pre>
+// variabler
+let x          // deklarasjon
+x = 3          // tilordning
+let y = 5      // deklarasjon + tilordning
+const navn = &#x27;Ada&#x27; // må tilordnes med én gang
+
+// operatorer
++ - * / % **            // aritmetiske
+= += -= *= /= %=        // tilordning
+=== !== == !=           // sammenligning (bruk helst === / !==)
+&gt; &gt;= &lt; &lt;=               // større/mindre enn
+&amp;&amp; || !                 // logiske
+x &gt; 5 ? &#x27;stor&#x27; : &#x27;liten&#x27; // ternary
+
+// if-setninger
+if (x &gt; 0) { /* ... */ }
+if (x &gt; 0) { /* ... */ } else if (x &lt; 0) { /* ... */ }
+if (x &gt; 0) { /* ... */ } else if (x &lt; 0) { /* ... */ } else { /* ... */ }
+
+// null &amp; undefined
+let a = null  // eksplisitt tom/ingen verdi
+let b         // undefined = ikke satt
+
+// løkker
+for (let i = 0; i &lt; 5; i++) { sum += i }       // telleløkke
+for (const value of xs) { console.log(value) } // elementer i array
+while (confirm(&#x27;Fortsette?&#x27;)) { tall++ }       // så lenge betingelsen er sann
+
+// MVC
+const model = { navn: &#x27;Ada&#x27;, lys: &#x27;rødt&#x27; }     // model = data
+document.getElementById(&#x27;id&#x27;).innerHTML = model.lys // view = vis data
+function sett(verdi){
+  model.lys = verdi
+  view()
+} // controller = endre data + render på nytt
+
+// tall &amp; Math
+parseInt(&#x27;42&#x27;); parseFloat(&#x27;3.14&#x27;); pris.toFixed(2)
+Math.round(x); Math.floor(x); Math.ceil(x)
+Math.max(a, b); Math.min(a, b)
+Math.random()
+Math.floor(Math.random() * (max - min + 1)) + min // heltall [min,max]
+
+// string
+&#x27;abc&#x27;.length
+&#x27;abc&#x27;.slice(1, 3)
+&#x27;abc&#x27;.includes(&#x27;a&#x27;)
+&#x27;a&#x27;.toUpperCase()
+&#x27;  a  &#x27;.trim()
+&#x27;a;b&#x27;.split(&#x27;;&#x27;)
+[&#x27;a&#x27;, &#x27;b&#x27;].join(&#x27;,&#x27;)
+&#x27;7&#x27;.padStart(2, &#x27;0&#x27;)
+`Hei ${navn}
+Velkommen`
+
+// date
+const d = new Date()
+d.getFullYear(); d.getMonth(); d.getDate()
+d.toLocaleDateString(&#x27;no-NO&#x27;)
+d.toISOString()
+new Date(d.getTime() + 24 * 60 * 60 * 1000) // + ett døgn
+
+// objekter
+const person = { navn: &#x27;Ada&#x27;, alder: 20 }
+const q = {}
+q.navn = &#x27;Ada&#x27;
+const store = {}
+store[&#x27;nøkkel&#x27;] = &#x27;verdi&#x27;
+for (const key in person) {
+  console.log(key, person[key])
+}
+
+// arrays
+const xs = [1, 2, 3]
+xs.push(4)
+xs.pop()
+xs[0]
+for (let i = 0; i &lt; xs.length; i++) { /* ... */ }
+for (const value of xs) { /* ... */ }
+xs.find(fn)
+xs.filter(fn)
+xs.map(fn)</code></pre>
       </section>
 
-      <!-- Funksjoner -->
-      <section class="card">
-        <h2>🧩 Funksjoner <span class="tag"><a href="https://www.w3schools.com/js/js_functions.asp">Functions</a></span></h2>
-        <pre><code class="language-js">function vis(){ document.getElementById('id').innerHTML='Hei' }</code></pre>
-        <pre><code class="language-js">function hils(navn){ return 'Hei ' + navn }</code></pre>
-        <pre><code class="language-js">function dobbel(x){ return x*2 }</code></pre>
-        <div>➡️ Lambda: <a href="https://www.w3schools.com/js/js_arrow_function.asp">Arrow Functions</a></div>
-        <pre><code class="language-js">const f = (x) => x*2</code></pre>
-      </section>
+      <div class="side">
+        <section class="section">
+<pre><code class="language-html">&lt;!-- DOM / grunnferdighet --&gt;
+&lt;button onclick=&quot;vis()&quot;&gt;Klikk&lt;/button&gt;
 
-      <!-- Variabler -->
-      <section class="card">
-        <h2>📦 Variabler <span class="tag"><a href="https://www.w3schools.com/js/js_let.asp">let/const</a></span></h2>
-        <pre><code class="language-js">let x; // Deklarasjon</code></pre>
-        <pre><code class="language-js">x = 3; // Tilordning</code></pre>
-        <pre><code class="language-js">let y = 5; // Deklarasjon + tilordning</code></pre>
-        <pre><code class="language-js">const navn='Ada' // const: må tilordnes med en gang</code></pre>
-      </section>
+&lt;!-- MVC input-binding --&gt;
+&lt;input value=&quot;${model.navn}&quot; oninput=&quot;model.navn = this.value&quot;&gt;
 
-      <!-- Operatorer -->
-      <section class="card">
-        <h2>➕ Operatorer <span class="tag"><a href="https://www.w3schools.com/js/js_operators.asp">Ops</a></span></h2>
-        <pre><code class="language-js">+ - * / % **    // Aritmetiske</code></pre>
-        <pre><code class="language-js">= += -= *= /= %= // Tilordning</code></pre>
-        <pre><code class="language-js">=== !== == !=   // Sammenligning</code></pre>
-        <pre><code class="language-js">&gt; &gt;= &lt; &lt;=       // Større/mindre enn</code></pre>
-        <pre><code class="language-js">&amp;&amp; || !         // Logiske</code></pre>
-        <pre><code class="language-js">x&gt;5 ? 'stor':'liten' // Ternary</code></pre>
-      </section>
+&lt;!-- DOM-hendelser --&gt;
+&lt;button onclick=&quot;funksjon()&quot;&gt;Klikk&lt;/button&gt;
+&lt;input oninput=&quot;oppdater()&quot;&gt;
+&lt;select onchange=&quot;endre()&quot;&gt;&lt;/select&gt;</code></pre>
+        </section>
 
-      <!-- If -->
-      <section class="card">
-        <h2>🔀 If-setninger <span class="tag"><a href="https://www.w3schools.com/js/js_if_else.asp">If</a></span></h2>
-        <pre><code class="language-js">if(x&gt;0){ ... } // Kun if</code></pre>
-        <pre><code class="language-js">if(x&gt;0){...} else if(x&lt;0){...} // If + else if</code></pre>
-        <pre><code class="language-js">if(x&gt;0){...} else if(x&lt;0){...} else {...}</code></pre>
-      </section>
-
-      <!-- Null -->
-      <section class="card">
-        <h2>🕳️ Null &amp; Undefined <span class="tag"><a href="https://www.w3schools.com/js/js_undefined.asp">Ref</a></span></h2>
-        <pre><code class="language-js">let x=null; // Null = tom verdi</code></pre>
-        <pre><code class="language-js">let y; // Undefined = ikke satt</code></pre>
-      </section>
-
-      <!-- Løkker -->
-      <section class="card">
-        <h2>🔁 Løkker <span class="tag"><a href="https://www.w3schools.com/js/js_loop_for.asp">Loops</a></span></h2>
-        <pre><code class="language-js">for(let i=0;i&lt;5;i++){ sum+=i }</code></pre>
-        <pre><code class="language-js">for(const v of xs){ console.log(v) }</code></pre>
-        <pre><code class="language-js">while(confirm('Fortsette?')){ tall++ }</code></pre>
-      </section>
-
-      <!-- MVC -->
-      <section class="card">
-        <h2>🧭 MVC</h2>
-        <pre><code class="language-js">const model={navn:'Ada',lys:'rødt'}</code></pre>
-        <pre><code class="language-js">document.getElementById('id').innerHTML=model.lys</code></pre>
-        <pre><code class="language-js">function sett(v){ model.lys=v; view() }</code></pre>
-        <pre><code class="language-html">&lt;input value="${model.navn}" oninput="model.navn=this.value"&gt;</code></pre>
-      </section>
-
-      <!-- Tall -->
-      <section class="card">
-        <h2>🔢 Tall &amp; Math <span class="tag"><a href="https://www.w3schools.com/js/js_math.asp">Math</a></span></h2>
-        <pre><code class="language-js">parseInt('42'); parseFloat('3.14'); x.toFixed(2)</code></pre>
-        <pre><code class="language-js">Math.round(x); Math.floor(x); Math.ceil(x)</code></pre>
-        <pre><code class="language-js">Math.max(a,b); Math.min(a,b)</code></pre>
-        <pre><code class="language-js">Math.random()</code></pre>
-        <pre><code class="language-js">Math.floor(Math.random()*(max-min+1))+min</code></pre>
-      </section>
-
-      <!-- String -->
-      <section class="card">
-        <h2>📝 String <span class="tag"><a href="https://www.w3schools.com/js/js_string_methods.asp">Methods</a></span></h2>
-        <pre><code class="language-js">'abc'.length; 'abc'.slice(1,3); 'abc'.includes('a')</code></pre>
-        <pre><code class="language-js">'a'.toUpperCase(); '  a  '.trim()</code></pre>
-        <pre><code class="language-js">'a;b'.split(';'); ['a','b'].join(',')</code></pre>
-        <pre><code class="language-js">'7'.padStart(2,'0')</code></pre>
-        <pre><code class="language-js">`Hei ${navn}\nVelkommen`</code></pre>
-      </section>
-
-      <!-- Dato -->
-      <section class="card">
-        <h2>📅 Date <span class="tag"><a href="https://www.w3schools.com/js/js_dates.asp">Dates</a></span></h2>
-        <pre><code class="language-js">const d=new Date(); d.getFullYear(); d.getMonth()</code></pre>
-        <pre><code class="language-js">d.toLocaleDateString('no-NO'); d.toISOString()</code></pre>
-        <pre><code class="language-js">new Date(d.getTime()+24*60*60*1000)</code></pre>
-      </section>
-
-      <!-- Objekter -->
-      <section class="card">
-        <h2>🧱 Objekter <span class="tag"><a href="https://www.w3schools.com/js/js_objects.asp">Objects</a></span></h2>
-        <pre><code class="language-js">const p={navn:'Ada',alder:20}; const q={}; q.navn='Ada'</code></pre>
-        <pre><code class="language-js">const store={}; store['nøkkel']='verdi'</code></pre>
-        <pre><code class="language-js">for(const k in p){ console.log(k,p[k]) }</code></pre>
-      </section>
-
-      <!-- Arrays -->
-      <section class="card">
-        <h2>📜 Arrays <span class="tag"><a href="https://www.w3schools.com/js/js_arrays.asp">Arrays</a></span></h2>
-        <pre><code class="language-js">const xs=[1,2,3]; xs.push(4); xs.pop(); xs[0]</code></pre>
-        <pre><code class="language-js">for(let i=0;i&lt;xs.length;i++){ ... }</code></pre>
-        <pre><code class="language-js">for(const v of xs){ ... }</code></pre>
-        <pre><code class="language-js">xs.find(fn); xs.filter(fn); xs.map(fn)</code></pre>
-      </section>
-
-      <!-- DOM hendelser -->
-      <section class="card">
-        <h2>🖱️ DOM-hendelser <span class="tag"><a href="https://www.w3schools.com/js/js_htmldom_events.asp">Events</a></span></h2>
-        <pre><code class="language-html">&lt;button onclick="funksjon()"&gt;</code></pre>
-        <pre><code class="language-html">&lt;input oninput="oppdater()"&gt;</code></pre>
-        <pre><code class="language-html">&lt;select onchange="endre()"&gt;</code></pre>
-      </section>
-
+        <section class="section">
+<pre><code class="language-css">/* ingen CSS-pensum her – kun nyttig basis */
+#id { color: red; }
+.hidden { display: none; }
+button { cursor: pointer; }</code></pre>
+        </section>
+      </div>
     </div>
   </main>
 
-  <footer>Skriv ut til PDF via nettleserens «Skriv ut» → A4 → Skala 95–100% → Smale marger.</footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
 </body>
 </html>
