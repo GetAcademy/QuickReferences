@@ -190,6 +190,12 @@ const state = reactive({ count: 0, name: '' })
 const double = computed(() =&gt; count.value * 2)</code></pre>
         </section>
         <section class="section">
+<pre><code class="language-typescript">// oppdatere state
+const increment = () => {
+  count.value++      // ref → .value
+  state.count++      // reactive → direkte
+}</code></pre></section>
+        <section class="section">
 <pre><code class="language-html">&lt;!-- single file component --&gt;
 &lt;script setup lang="ts"&gt;&lt;/script&gt;
 &lt;template&gt;&lt;/template&gt;
@@ -198,8 +204,8 @@ const double = computed(() =&gt; count.value * 2)</code></pre>
         </section>
 
         <section class="section">
-<pre><code class="language-html">&lt;!-- expressions --&gt;
-{{ count }} {{ count + 1 }} {{ isActive ? 'Yes' : 'No' }}</code></pre>
+<pre><code class="language-html">&lt;!-- uttrykk i HTML-delen --&gt;
+{{ count }} {{ count + 1 }} {{ state.name }} {{ isActive ? 'Yes' : 'No' }}</code></pre>
         </section>
 
         <section class="section">
