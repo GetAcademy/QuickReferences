@@ -79,7 +79,7 @@ function addContact() { // Controller flytter fra ViewState til app-data
 function updateViewContactsPage() {
   const page = model.viewState.contactsPage;
 
-  let html = `
+  document.getElementById('app').innerHTML = /*HTML*/`
     <h1>Kontaktregister</h1>
     <input
       type="text"
@@ -87,15 +87,9 @@ function updateViewContactsPage() {
       value="${page.searchText}"
       oninput="model.viewState.contactsPage.searchText=this.value;"
     /> <!-- Inputfelt skriver til ViewState -->
-    <table><tr><th>Navn</th><th>Telefon</th><th>Kategorier</th><th></th></tr>
-  `;
-
-  for (let contact of model.contacts) {
-    if (!shouldShowContact(contact)) continue;
-    html += createContactRowHtml(contact);
-  }
-
-  html += `
+    <table>
+        <tr><th>Navn</th><th>Telefon</th><th>Kategorier</th><th></th></tr>
+        ${createContactsTableRowHtml()}
     </table>
 
     <h2>Ny kontakt</h2>
@@ -111,19 +105,19 @@ function updateViewContactsPage() {
     />
     <button onclick="addContact()">Legg til</button>
   `;
-
-  document.getElementById('app').innerHTML = createPageHtml(html);
 }
-```
 
----
+function createContactsTableRowHtml() {
+  let html = '';
+  for (let contact of model.contacts) {
+    if (!shouldShowContact(contact)) continue;
+    html += createContactRowHtml(contact);
+  }
+  return html;
+}
 
-## 5. Trekk ut HTML-funksjoner
-
-```js
-// Ikke komponenter. Bare funksjoner som lager HTML.
-function createContactRowHtml(contact) {
-  return `
+function createContactRowHtml(contact) { // Trekk ut HTML-funksjoner som lagerHTML
+  return /*HTML*/`
     <tr>
       <td>${contact.name}</td>
       <td>${contact.phone}</td>
@@ -134,157 +128,29 @@ function createContactRowHtml(contact) {
     </tr>
   `;
 }
-```
-
-```js
-function createCategoryListHtml(contactId) {
-  let html = '';
-
-  for (let relation of model.contactCategories) {
-    if (relation.contactId !== contactId) continue;
-
-    const category = findCategory(relation.categoryId);
-    html += `<span class="tag">${category.name}</span> `;
-  }
-
-  return html;
-}
-```
-
-```js
-// Når bruker vi slike funksjoner?
-// - når samme HTML trengs flere steder
-// - når en view-funksjon blir for lang
-// - når én rad / ett kort / én meny skal lages
-```
-
----
-
-## 6. Felles layout og meny
-
-```js
-// common.js eller commonView.js
-function createPageHtml(contentHtml) {
-  return `
-    <div class="page">
-      <header>
-        <h1>Kontaktregister</h1>
-      </header>
-
-      <nav>
-        <button onclick="goToPage('contacts')">Kontakter</button>
-        <button onclick="goToPage('categories')">Kategorier</button>
-      </nav>
-
-      <main>
-        ${contentHtml}
-      </main>
-    </div>
-  `;
-}
-```
-
-```js
 function goToPage(page) {
   model.viewState.app.currentPage = page;
   updateView();
 }
-```
-
-```txt
-currentPage = 'contacts'
-  → updateViewContactsPage()
-
-currentPage = 'categories'
-  → updateViewCategoriesPage()
-```
-
-</div>
-
-<div class="col">
-
-## 7. Controller: endre data, ikke HTML
-
-```js
 // contactPageController.js
 function deleteContact(contactId) {
-  for (let i = 0; i < model.contacts.length; i++) {
-    if (model.contacts[i].id === contactId) {
-      model.contacts.splice(i, 1);
-      break;
-    }
-  }
-
-  deleteRelationsForContact(contactId);
+  const index = arrayIndexFromId(model.contact, contactId);
+  if(id == null) return;
+  model.contacts.splice(i, 1);
   updateView();
 }
-```
-
-```js
-function deleteRelationsForContact(contactId) {
-  for (let i = model.contactCategories.length - 1; i >= 0; i--) {
-    const relation = model.contactCategories[i];
-
-    if (relation.contactId === contactId) {
-      model.contactCategories.splice(i, 1);
-    }
-  }
-}
-```
-
-```js
-// Controller skal vanligvis:
-// 1. hente data fra ViewState / app-data
-// 2. endre model
-// 3. kalle updateView()
-```
-
----
-
-## 8. Relasjoner i modellen
-
-```js
-// Kontakt:
-{ id: 2, name: 'Linus', phone: '22222222' }
-
-// Kategori:
-{ id: 1, name: 'Venner' }
-
-// Relasjon:
-{ contactId: 2, categoryId: 1 }
-```
-
-```js
-function addCategoryToContact(contactId, categoryId) {
-  model.contactCategories.push({
-    contactId: contactId,
-    categoryId: categoryId,
-  });
-
-  updateView();
-}
-```
-
-```js
-function findCategory(categoryId) {
-  for (let category of model.categories) {
-    if (category.id === categoryId) return category;
+// common.js
+function arrayIndexFromId(array, id) {
+  for (let index = 0; index < array; index++) {
+    if (array[index].id === id) return index;
   }
   return null;
 }
-```
-
-```js
 function findContact(contactId) {
-  for (let contact of model.contacts) {
-    if (contact.id === contactId) return contact;
-  }
-  return null;
+  const index = arrayIndexFromId(model.contacts, contactId);
+  return index == null ? null : model.contacts[index];
 }
 ```
-
----
-
 ## 9. Filtrering uten filter/map
 
 ```js
