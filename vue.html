@@ -3,65 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vue Quick Reference</title>
+  <title>Vue 3 – Verktøykassa</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
 
   <style>
     @page {
       size: A4 landscape;
-      margin: 10mm;
+      margin: 8mm;
     }
 
     :root {
-      --page-bg: #f3f3f3;
-      --card-bg: #ffffff;
-      --border: #dddddd;
-      --text: #222;
-      --gap: 20px;
-      --pad: 16px;
+      --bg: #f4f7fb;
+      --paper: #ffffff;
+      --ink: #102033;
+      --muted: #5c6b7a;
+      --blue: #153f7a;
+      --blue2: #0d62b3;
+      --green: #159a65;
+      --green-bg: #f0faf5;
+      --blue-bg: #f2f7ff;
+      --violet: #6b4bc3;
+      --border: #d7e0ea;
+      --shadow: 0 8px 24px rgba(17, 42, 75, .08);
       --radius: 12px;
-      --font-size: clamp(12px, 0.78vw, 15px);
-      --line-height: 1.28;
-      --max-width: 1500px;
+      --font-size: clamp(11px, 0.68vw, 13.5px);
+      --line-height: 1.22;
     }
 
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      background: var(--page-bg);
-      color: var(--text);
-      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .poster {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 18px;
     }
 
     .page {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 20px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 18px;
     }
 
-    .sheet {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: var(--pad);
+    header {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--gap);
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 3px solid #e6eef8;
+      padding-bottom: 12px;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #41b883, #153f7a);
+      color: white;
+      font-weight: 900;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 2.2vw, 42px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #07152b;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      font-size: clamp(12px, 1vw, 18px);
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .legend {
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .dot.ts { background: var(--blue2); }
+    .dot.html { background: var(--green); }
+    .dot.note { background: var(--violet); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
       align-items: start;
     }
 
     .col {
+      display: grid;
+      gap: 10px;
       min-width: 0;
     }
 
-    .section {
-      margin: 0 0 14px 0;
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: white;
+      break-inside: avoid;
     }
 
-    .section:last-child {
-      margin-bottom: 0;
+    .card-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 10px;
+      color: white;
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+
+    .card.ts .card-title { background: var(--blue); }
+    .card.html .card-title { background: var(--green); }
+    .card.note .card-title { background: var(--violet); }
+
+    .kind {
+      opacity: .85;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .content {
+      padding: 8px 9px;
     }
 
     pre[class*="language-"] {
@@ -83,171 +186,254 @@
       overflow-wrap: anywhere;
     }
 
-    .toolbar, div.code-toolbar > .toolbar { display: none !important; }
-
-    @media (max-width: 900px) {
-      :root {
-        --gap: 14px;
-        --pad: 14px;
-        --font-size: 13px;
-      }
-
-      .sheet {
-        grid-template-columns: 1fr;
-      }
+    .note-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: clamp(11px, 0.72vw, 13px);
+      line-height: 1.28;
+      color: #1b2b3c;
     }
 
-    @media (min-width: 1400px) {
-      :root {
-        --font-size: 14px;
-      }
+    .note-list li { margin: 0 0 5px; }
+    .note-list li:last-child { margin-bottom: 0; }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 2px solid #e6eef8;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .toolbar, div.code-toolbar > .toolbar { display: none !important; }
+
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      header { grid-template-columns: auto 1fr; }
+      .legend { grid-column: 1 / -1; grid-template-columns: repeat(3, max-content); }
+    }
+
+    @media (max-width: 760px) {
+      .poster { padding: 10px; }
+      .page { padding: 12px; border-radius: 14px; }
+      .grid { grid-template-columns: 1fr; }
+      header { grid-template-columns: 1fr; }
+      .logo { display: none; }
+      .legend { grid-template-columns: 1fr; }
     }
 
     @media print {
-  :root {
-    --font-size: 10.5px;
-    --line-height: 1.2;
-    --gap: 16px;
-    --pad: 10px;
-    --radius: 8px;
-  }
+      :root {
+        --font-size: 8.1px;
+        --line-height: 1.13;
+      }
 
-  html, body {
-    width: 297mm;
-    height: 210mm;
-  }
-
-  body {
-    background: white;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .page {
-    max-width: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .sheet {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 16px !important;
-    border-color: #d9d9d9;
-    break-inside: avoid;
-    width: calc(297mm - 20mm);
-  }
-
-  .col {
-    display: block;
-  }
-
-  .section {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-}
+      html, body {
+        width: 297mm;
+        height: 210mm;
+      }
 
       body {
         background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
-      .page {
+      .poster {
         max-width: none;
         margin: 0;
         padding: 0;
       }
 
-      .sheet {
-        border-color: #d9d9d9;
-        break-inside: avoid;
+      .page {
+        width: calc(297mm - 16mm);
+        min-height: calc(210mm - 16mm);
+        padding: 10px;
+        box-shadow: none;
+        border-radius: 12px;
       }
+
+      header {
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+      }
+
+      .logo {
+        width: 44px;
+        height: 44px;
+        font-size: 28px;
+      }
+
+      h1 { font-size: 30px; }
+      .subtitle { font-size: 13px; }
+      .legend { font-size: 10px; }
+
+      .grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        gap: 8px !important;
+      }
+
+      .col { gap: 7px; }
+      .card-title { padding: 4px 7px; font-size: 9.4px; }
+      .content { padding: 5px 6px; }
+      .note-list { font-size: 8.5px; line-height: 1.18; }
+      footer { margin-top: 7px; padding-top: 6px; font-size: 9px; }
     }
   </style>
 </head>
 <body>
-  <main class="page">
-    <div class="sheet">
-      <div class="col">
-        <section class="section">
-<pre><code class="language-typescript">// reactivity + computed
-const count = ref&lt;number&gt;(0)
-const state = reactive({ count: 0, name: '' })
-const double = computed(() =&gt; count.value * 2)</code></pre>
-        </section>
-        <section class="section">
-<pre><code class="language-typescript">// oppdatere state
-const increment = () => {
-  count.value++      // ref → .value
-  state.count++      // reactive → direkte
-}</code></pre></section>
-        <section class="section">
-<pre><code class="language-typescript">// props (readonly) = data inn i komponenten
-type Props = { value: number; label?: string }
-const props = defineProps&lt;Props&gt;()</code></pre>
-        </section>
+  <main class="poster">
+    <div class="page">
+      <header>
+        <div class="logo">V</div>
+        <div>
+          <h1>Vue 3 – Quick Reference</h1>
+          <div class="subtitle">Grunnleggende verktøy</div>
+        </div>
+        <div class="legend">
+          <!--
+          <span><i class="dot ts"></i>Script / TypeScript</span>
+          <span><i class="dot html"></i>Template / HTML</span>
+          <span><i class="dot note"></i>Huskeregler</span>
+          -->
+        </div>
+      </header>
 
-        <section class="section">
-<pre><code class="language-typescript">// emits = data ut av komponenten
-const emit = defineEmits&lt;{
+      <section class="grid">
+        <div class="col">
+          <article class="card ts">
+            <div class="card-title">1. Props <span class="kind">data inn</span></div>
+            <div class="content">
+<pre><code class="language-typescript">ype Props = { value: number; label?: string }
+const props = defineProps&lt;Props&gt;()</code></pre>
+            </div>
+          </article>
+
+          <article class="card ts">
+            <div class="card-title">2. Emits <span class="kind">data ut</span></div>
+            <div class="content">
+<pre><code class="language-typescript">const emit = defineEmits&lt;{
   (e: 'increment'): void
   (e: 'update:value', value: number): void
 }&gt;()</code></pre>
-        </section>
+            </div>
+          </article>
 
-        <section class="section">
-<pre><code class="language-html">&lt;!-- single file component --&gt;
-&lt;script setup lang="ts"&gt;&lt;/script&gt;
-&lt;template&gt;&lt;/template&gt;
-&lt;style scoped&gt;&lt;/style&gt;
-</code></pre>
-        </section>
+          <article class="card ts">
+            <div class="card-title">3. Reactivity + computed</div>
+            <div class="content">
+<pre><code class="language-typescript">// ref -&gt; .value i script
+// reactive -&gt; direkte tilgang
+const count = ref&lt;number&gt;(0)
+const state = reactive({ count: 0, name: '' })
+const double = computed(() =&gt; count.value * 2)</code></pre>
+            </div>
+          </article>
 
-        <section class="section">
-<pre><code class="language-html">&lt;!-- uttrykk i HTML-delen --&gt;
-{{ count }} {{ count + 1 }} {{ state.name }} {{ isActive ? 'Yes' : 'No' }}</code></pre>
-        </section>
+          <article class="card ts">
+            <div class="card-title">4. Oppdatere state</div>
+            <div class="content">
+<pre><code class="language-typescript">const increment = () =&gt; {
+  count.value++ // ref -&gt; .value
+  state.count++ // reactive -&gt; direkte
+}</code></pre>
+            </div>
+          </article>
+        </div>
 
-        <section class="section">
-<pre><code class="language-html">&lt;!-- binding --&gt;
-&lt;div :id="id" :class="{ active: isActive }" :style="{ color: 'red' }"&gt;&lt;/div&gt;
-&lt;div :class="['btn', isActive &amp;&amp; 'active']"&gt;&lt;/div&gt;</code></pre>
-        </section>
-      </div>
+        <div class="col">
+          <article class="card html">
+            <div class="card-title">5. Script setup</div>
+            <div class="content">
+<pre><code class="language-html">&lt;script setup lang="ts"&gt;&lt;/script&gt;</code></pre>
+            </div>
+          </article>
 
-      <div class="col">
-        <section class="section">
-<pre><code class="language-html">&lt;!-- events --&gt; 
-&lt;button @click="increment"&gt;&lt;/button&gt; &lt;!-- kall en funksjon --&gt;
-&lt;button @click="doSomething(id)"&gt;&lt;/button&gt; &lt;!-- kall funksjon med argument --&gt;
-&lt;button @click="emit('increment')"&gt;&lt;/button&gt; &lt;!-- send event opp til parent --&gt;
-&lt;button @click="count++"&gt;&lt;/button&gt; &lt;!-- enkel inline endring --&gt;
-&lt;form @submit.prevent="submit"&gt;&lt;/form&gt; &lt;!-- stopp vanlig form-submit --&gt;
+          <article class="card html">
+            <div class="card-title">6. Expressions</div>
+            <div class="content">
+<pre><code class="language-html">{{ count }}
+{{ count + 1 }}
+{{ isActive ? 'Yes' : 'No' }}</code></pre>
+            </div>
+          </article>
+
+          <article class="card html">
+            <div class="card-title">7. Binding</div>
+            <div class="content">
+<pre><code class="language-html">&lt;div :id="id"&gt;&lt;/div&gt;
+&lt;div :class="{ active: isActive }"&gt;&lt;/div&gt;
+&lt;div :class="['btn', isActive &amp;&amp; 'active']"&gt;&lt;/div&gt;
+&lt;div :style="{ color: 'red' }"&gt;&lt;/div&gt;</code></pre>
+            </div>
+          </article>
+
+          <article class="card html">
+            <div class="card-title">8. Events</div>
+            <div class="content">
+<pre><code class="language-html">&lt;button @click="increment"&gt;&lt;/button&gt; &lt;!-- kall funksjon --&gt;
+&lt;button @click="emit('increment')"&gt;&lt;/button&gt; &lt;!-- send opp --&gt;
+&lt;button @click="count++"&gt;&lt;/button&gt; &lt;!-- inline endring --&gt;
+&lt;button @click="doSomething(id)"&gt;&lt;/button&gt; &lt;!-- argument --&gt;
+&lt;form @submit.prevent="submit"&gt;&lt;/form&gt; &lt;!-- stopp reload --&gt;
 &lt;button @click.stop="click"&gt;&lt;/button&gt; &lt;!-- stopp bubbling --&gt;
-&lt;input @keyup.enter="save" /&gt;  &lt;!-- reager på Enter-tast --&gt;</code></pre>
-        </section>
+&lt;input @keyup.enter="save" /&gt; &lt;!-- Enter-tast --&gt;</code></pre>
+            </div>
+          </article>
+        </div>
 
-        <section class="section">
-<pre><code class="language-html">&lt;!-- v-model --&gt;
-&lt;input v-model="count" /&gt;</code></pre>
-        </section>
+        <div class="col">
+          <article class="card html">
+            <div class="card-title">9. v-model</div>
+            <div class="content">
+<pre><code class="language-typescript">const text = ref('')</code></pre>
+<pre><code class="language-html">&lt;input v-model="text" /&gt;</code></pre>
+            </div>
+          </article>
 
-        <section class="section">
-<pre><code class="language-html">&lt;!-- conditionals --&gt;
-&lt;div v-if="isVisible"&gt;&lt;/div&gt; // rendre eller ikke rendre
+          <article class="card html">
+            <div class="card-title">10. Conditionals</div>
+            <div class="content">
+<pre><code class="language-html">&lt;div v-if="isVisible"&gt;&lt;/div&gt;      &lt;!-- render --&gt;
 &lt;div v-else-if="other"&gt;&lt;/div&gt;
 &lt;div v-else&gt;&lt;/div&gt;
-&lt;div v-show="isVisible"&gt;&lt;/div&gt; // vise eller skjule med display: none</code></pre>
-        </section>
+&lt;div v-show="isVisible"&gt;&lt;/div&gt;    &lt;!-- toggle ofte --&gt;</code></pre>
+            </div>
+          </article>
 
-        <section class="section">
-<pre><code class="language-html">&lt;!-- loops --&gt;
-&lt;div v-for="item in items" :key="item.id"&gt;{{ item }}&lt;/div&gt;
-&lt;div v-for="(item, index) in items" :key="item.id"&gt;&lt;/div&gt;
+          <article class="card html">
+            <div class="card-title">11. Loops (v-for)</div>
+            <div class="content">
+<pre><code class="language-html">&lt;div v-for="item in items" :key="item.id"&gt;{{ item }}&lt;/div&gt;
+&lt;div v-for="(item, index) in items" :key="index"&gt;&lt;/div&gt;
 &lt;div v-for="(value, keyName) in obj" :key="keyName"&gt;&lt;/div&gt;
-&lt;div v-for="n in 6" :key="n"&gt;{{ n }}&lt;/div&gt;</code></pre>        
-        </section>
-      </div>
+&lt;div v-for="n in 6" :key="n"&gt;{{ n }}&lt;/div&gt;</code></pre>
+            </div>
+          </article>
+
+          <article class="card note">
+            <div class="card-title">12. Korte huskeregler</div>
+            <div class="content">
+              <ul class="note-list">
+                <li><strong>props</strong> er readonly – ikke muter dem.</li>
+                <li><strong>emit</strong> sender hendelser/data opp til parent.</li>
+                <li><strong>ref</strong>: bruk <code>.value</code> i script, ikke i template.</li>
+                <li><strong>computed</strong> brukes for avledet state.</li>
+                <li><strong>v-if</strong> lager/fjerner DOM. Bruk når noe sjelden vises.</li>
+                <li><strong>v-show</strong> skjuler/viser med CSS. Bruk når noe toggles ofte.</li>
+                <li><strong>v-for</strong>: bruk alltid <code>:key</code>, helst stabil id.</li>
+                <li>Unngå <strong>v-if</strong> og <strong>v-for</strong> på samme element.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
     </div>
   </main>
 
